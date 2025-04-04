@@ -1,0 +1,716 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Fri Apr 4 03:34:24 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: system
+Enter password:
+Connected.
+SQL> CREATE TABLE JOB(JID NUMBER(20) PRIMARY KEY,JOB_TITLE VARCHAR(20),MIN_SAL NUMBER(20),MAX_SAL(20));
+CREATE TABLE JOB(JID NUMBER(20) PRIMARY KEY,JOB_TITLE VARCHAR(20),MIN_SAL NUMBER(20),MAX_SAL(20))
+                                                                                            *
+ERROR at line 1:
+ORA-00902: invalid datatype
+
+
+SQL> CREATE TABLE JOB(JID NUMBER(20) PRIMARY KEY,JOB_TITLE VARCHAR(20),MIN_SAL NUMBER(20),MAX_SAL NUMBER(20));
+CREATE TABLE JOB(JID NUMBER(20) PRIMARY KEY,JOB_TITLE VARCHAR(20),MIN_SAL NUMBER(20),MAX_SAL NUMBER(20))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> CREATE TABLE JOBT(JID NUMBER(20) PRIMARY KEY,JOB_TITLE VARCHAR(20),MIN_SAL NUMBER(20),MAX_SAL NUMBER(20));
+
+Table created.
+
+SQL> CREATE TABLE REGION(RID NUMBER(30) PRIMARY KEY,RNAME VARCHAR(25));
+
+Table created.
+
+SQL> CREATE TABLE COUNTRIES(CID NUMBER(25) PRIMARY KEY,CNAME VARCHAR(25),RID NUMBER(30) FOREIGN KEY(RID) REFERENCES REGION(RID));
+CREATE TABLE COUNTRIES(CID NUMBER(25) PRIMARY KEY,CNAME VARCHAR(25),RID NUMBER(30) FOREIGN KEY(RID) REFERENCES REGION(RID))
+                                                                                   *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> CREATE TABLE COUNTRIES(CID NUMBER(25) PRIMARY KEY,CNAME VARCHAR(25),RID NUMBER(30), FOREIGN KEY(RID) REFERENCES REGION(RID));
+
+Table created.
+
+SQL> CREATE TABLE LOCATION(LID NUMBER(25) PRIMARY KEY,STREET_ADDRESS VARCHAR(30),POSTAL CODE VARCHAR(25),CITY VARCHAR(25),STATE VARCHAR(30),CID NUMBER(25),FOREIGN KEY(CID) REFERENCES COUNTRIES(CID));
+CREATE TABLE LOCATION(LID NUMBER(25) PRIMARY KEY,STREET_ADDRESS VARCHAR(30),POSTAL CODE VARCHAR(25),CITY VARCHAR(25),STATE VARCHAR(30),CID NUMBER(25),FOREIGN KEY(CID) REFERENCES COUNTRIES(CID))
+                                                                                        *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> CREATE TABLE LOCATION(LID NUMBER(25) PRIMARY KEY,STREET_ADDRESS VARCHAR(30),POSTAL_CODE VARCHAR(25),CITY VARCHAR(25),STATE VARCHAR(30),CID NUMBER(25),FOREIGN KEY(CID) REFERENCES COUNTRIES(CID));
+
+Table created.
+
+SQL> CREATE TABLE DEPARTMENT(DEPTID NUMBER(30) PRIMARY KEY,DEPTNAME VARCHAR(25),LID NUMBER(25),FOREIGN KEY(LID) REFERENCES LOCATION(LID));
+CREATE TABLE DEPARTMENT(DEPTID NUMBER(30) PRIMARY KEY,DEPTNAME VARCHAR(25),LID NUMBER(25),FOREIGN KEY(LID) REFERENCES LOCATION(LID))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> CREATE TABLE DEPT(DEPTID NUMBER(30) PRIMARY KEY,DEPTNAME VARCHAR(25),LID NUMBER(25),FOREIGN KEY(LID) REFERENCES LOCATION(LID));
+CREATE TABLE DEPT(DEPTID NUMBER(30) PRIMARY KEY,DEPTNAME VARCHAR(25),LID NUMBER(25),FOREIGN KEY(LID) REFERENCES LOCATION(LID))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> CREATE TABLE DEPART(DEPTID NUMBER(30) PRIMARY KEY,DEPTNAME VARCHAR(25),LID NUMBER(25),FOREIGN KEY(LID) REFERENCES LOCATION(LID));
+
+Table created.
+
+SQL> CREATE TABLE EMPLOYEE(EID NUMBER(25) PRIMARY KEY,FNAME VARCHAR(30),LNAME VARCHAR(25),EMAIL VARCHAR(25),PHNO NUMBER(10),HIRE_DATE DATE,JID NUMBER(20),FOREIGN KEY(JID) REFERENCES JOB(JID),SALARY NUMBER(10),MANAGER_ID NUMBER(10),DEPTID NUMBER(30),FOREIGN KEY(DEPTID) REFERENCES DEPART(DEPTID));
+CREATE TABLE EMPLOYEE(EID NUMBER(25) PRIMARY KEY,FNAME VARCHAR(30),LNAME VARCHAR(25),EMAIL VARCHAR(25),PHNO NUMBER(10),HIRE_DATE DATE,JID NUMBER(20),FOREIGN KEY(JID) REFERENCES JOB(JID),SALARY NUMBER(10),MANAGER_ID NUMBER(10),DEPTID NUMBER(30),FOREIGN KEY(DEPTID) REFERENCES DEPART(DEPTID))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> CREATE TABLE EMPLOYETAB(EID NUMBER(25) PRIMARY KEY,FNAME VARCHAR(30),LNAME VARCHAR(25),EMAIL VARCHAR(25),PHNO NUMBER(10),HIRE_DATE DATE,JID NUMBER(20),FOREIGN KEY(JID) REFERENCES JOB(JID),SALARY NUMBER(10),MANAGER_ID NUMBER(10),DEPTID NUMBER(30),FOREIGN KEY(DEPTID) REFERENCES DEPART(DEPTID));
+CREATE TABLE EMPLOYETAB(EID NUMBER(25) PRIMARY KEY,FNAME VARCHAR(30),LNAME VARCHAR(25),EMAIL VARCHAR(25),PHNO NUMBER(10),HIRE_DATE DATE,JID NUMBER(20),FOREIGN KEY(JID) REFERENCES JOB(JID),SALARY NUMBER(10),MANAGER_ID NUMBER(10),DEPTID NUMBER(30),FOREIGN KEY(DEPTID) REFERENCES DEPART(DEPTID))
+                                                                                                                                                                                       *
+ERROR at line 1:
+ORA-00904: "JID": invalid identifier
+
+
+SQL> CREATE TABLE EMPLOYETAB(EID NUMBER(25) PRIMARY KEY,FNAME VARCHAR(30),LNAME VARCHAR(25),EMAIL VARCHAR(25),PHNO NUMBER(10),HIRE_DATE DATE,JID NUMBER(20),FOREIGN KEY(JID) REFERENCES JOBT(JID),SALARY NUMBER(10),MANAGER_ID NUMBER(10),DEPTID NUMBER(30),FOREIGN KEY(DEPTID) REFERENCES DEPART(DEPTID));
+
+Table created.
+
+SQL>
+SQL> INSERT INTO JOBT VALUES(101,'SALESPERSON',5000,15000);
+
+1 row created.
+
+SQL> INSERT INTO JOBT VALUES(102,'ANALYST',3000,25000);
+
+1 row created.
+
+SQL> INSERT INTO JOBT VALUES(102,'DATA ANALYST',13000,35000);
+INSERT INTO JOBT VALUES(102,'DATA ANALYST',13000,35000)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SYSTEM.SYS_C004041) violated
+
+
+SQL> INSERT INTO JOBT VALUES(103,'DATA ANALYST',13000,35000);
+
+1 row created.
+
+SQL> INSERT INTO JOBT VALUES(104,'BUSINESS ANALYST',6000,38000);
+
+1 row created.
+
+SQL> INSERT INTO JOBT VALUES(105,'DEVELOPER',7000,48000);
+
+1 row created.
+
+SQL> CREATE TABLE DEPENDENT(DID NUMBER(10) PRIMARY KEY,FIR NAME VARCHAR(20),LAST NAME VARCHAR(30),RELATIONSHIP VARCHAR(20),EID NUMBER(25),FOREIGN KEY(EID) REFERENCES EMPLOYETAB(EID));
+CREATE TABLE DEPENDENT(DID NUMBER(10) PRIMARY KEY,FIR NAME VARCHAR(20),LAST NAME VARCHAR(30),RELATIONSHIP VARCHAR(20),EID NUMBER(25),FOREIGN KEY(EID) REFERENCES EMPLOYETAB(EID))
+                                                           *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> CREATE TABLE DEPENDENT(DID NUMBER(10) PRIMARY KEY,FIR_NAME VARCHAR(20),LAST_NAME VARCHAR(30),RELATIONSHIP VARCHAR(20),EID NUMBER(25),FOREIGN KEY(EID) REFERENCES EMPLOYETAB(EID));
+
+Table created.
+
+SQL> INSERT INTO REGION(009,'ASIA');
+INSERT INTO REGION(009,'ASIA')
+                   *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> INSERT INTO REGION VALUES (009,'ASIA');
+
+1 row created.
+
+SQL> INSERT INTO REGION VALUES (099,'AFRICA');
+
+1 row created.
+
+SQL> INSERT INTO REGION VALUES (999,'EUROPE');
+
+1 row created.
+
+SQL> INSERT INTO REGION VALUES (9999,'AMERICA');
+
+1 row created.
+
+SQL> INSERT INTO REGION VALUES (99999,'ANTARTICA');
+
+1 row created.
+
+SQL> INSERT INTO COUNTRIES VALUES (10101,'INDIA',009);
+
+1 row created.
+
+SQL> INSERT INTO COUNTRIES VALUES (00101,'NIGERIA',099);
+
+1 row created.
+
+SQL> INSERT INTO COUNTRIES VALUES (00111,'SPAIN',999);
+
+1 row created.
+
+SQL> INSERT INTO COUNTRIES VALUES (00011,'US',9999);
+
+1 row created.
+
+SQL> INSERT INTO COUNTRIES VALUES (11111,'ANTARTICA',99999);
+
+1 row created.
+
+SQL> INSERT INTO LOCATION VALUES(22222,GANDHI NAGAR,98760,AHMEDABAD,009);
+INSERT INTO LOCATION VALUES(22222,GANDHI NAGAR,98760,AHMEDABAD,009)
+                                         *
+ERROR at line 1:
+ORA-00917: missing comma
+
+
+SQL> INSERT INTO LOCATION VALUES(22222,GANDHI_NAGAR,98760,AHMEDABAD,009);
+INSERT INTO LOCATION VALUES(22222,GANDHI_NAGAR,98760,AHMEDABAD,009)
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> INSERT INTO LOCATION VALUES(22222,GANDHI_NAGAR,98760,AHMEDABAD,GUJARAT,009);
+INSERT INTO LOCATION VALUES(22222,GANDHI_NAGAR,98760,AHMEDABAD,GUJARAT,009)
+                                                               *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> INSERT INTO LOCATION VALUES(22222,'GANDHI_NAGAR',98760,'AHMEDABAD','GUJARAT',009);
+INSERT INTO LOCATION VALUES(22222,'GANDHI_NAGAR',98760,'AHMEDABAD','GUJARAT',009)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C004046) violated - parent key not
+found
+
+
+SQL> INSERT INTO LOCATION VALUES(22222,'GANDHI_NAGAR',98760,'AHMEDABAD','GUJARAT',10101);
+
+1 row created.
+
+SQL> INSERT INTO LOCATION VALUES(22220,'24th STREET,98700,'NIKO','NIGEI',00101);
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> INSERT INTO LOCATION VALUES(22220,'24th STREET',98700,'NIKO','NIGEI',00101);
+
+1 row created.
+
+SQL> INSERT INTO LOCATION VALUES(22200,'SAINT LOUIS STREET',98000,'LOUIS','SPAIN',00111);
+
+1 row created.
+
+SQL> INSERT INTO LOCATION VALUES(20000,'SILICON VALLEY',90000,'JOHANSBERG','US',00011);
+
+1 row created.
+
+SQL> INSERT INTO LOCATION VALUES(00000,'ATLANTIC VAIL',80000,'BERG','ANTARTICA',11111);
+
+1 row created.
+
+SQL> INSERT INTO DEPART(20,'SALES,'22222);
+INSERT INTO DEPART(20,'SALES,'22222)
+                   *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> INSERT INTO DEPART VALUES(20,'SALES,'22222);
+INSERT INTO DEPART VALUES(20,'SALES,'22222)
+                                     *
+ERROR at line 1:
+ORA-00917: missing comma
+
+
+SQL> INSERT INTO DEPART VALUES(20,'SALES',22222);
+
+1 row created.
+
+SQL> INSERT INTO DEPART VALUES(21,'SALES',22200);
+
+1 row created.
+
+SQL> INSERT INTO DEPART VALUES(22,'HR',20000);
+
+1 row created.
+
+SQL> INSERT INTO DEPART VALUES(23,'TESTING',00000);
+
+1 row created.
+
+SQL> INSERT INTO DEPART VALUES(24,'MARKETING',22220);
+
+1 row created.
+
+SQL> INSERT INTO DEPENDENT VALUES(55,'M','MAMOOTTY','FATHER',1);
+INSERT INTO DEPENDENT VALUES(55,'M','MAMOOTTY','FATHER',1)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SYSTEM.SYS_C004053) violated - parent key not
+found
+
+
+SQL> INSERT INTO EMPLOYETAB VALUES(1,'DULQUER','SALMAN',dq123@gmail.com,8486235875,'20-April-2012',101,10000);
+INSERT INTO EMPLOYETAB VALUES(1,'DULQUER','SALMAN',dq123@gmail.com,8486235875,'20-April-2012',101,10000)
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> INSERT INTO EMPLOYETAB VALUES(1,'DULQUER','SALMAN',dq123@gmail.com,8486235875,'20-April-2012',101,10000,66666,20);
+INSERT INTO EMPLOYETAB VALUES(1,'DULQUER','SALMAN',dq123@gmail.com,8486235875,'20-April-2012',101,10000,66666,20)
+*
+ERROR at line 1:
+ORA-04054: database link GMAIL.COM does not exist
+
+
+SQL> INSERT INTO EMPLOYETAB VALUES(1,'DULQUER','SALMAN','dq123@gmail.com',8486235875,'20-April-2012',101,10000,66666,20);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYETAB VALUES(2,'PRANAV','MOHANLAL','pm@gmail.com',8486235870,'20-April-2013',102,20000,66660,21);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYETAB VALUES(3,'TOVINO','THOMAS','tt@gmail.com',8486230870,'25-MAY-2013',103,30000,66600,22);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYETAB VALUES(4,'PRITHVI','RAJ','pr@gmail.com',8086230870,'26-MAY-2015',104,30000,60600,23);
+
+1 row created.
+
+SQL> INSERT INTO EMPLOYETAB VALUES(5,'KUNJACO','BOBAN','kb@gmail.com',8086230070,'30-JAN-2015',105,50000,60660,24);
+
+1 row created.
+
+SQL> INSERT INTO DEPENDENT VALUES(77,'MUHD','MAMOOTTY','FATHER',1);
+
+1 row created.
+
+SQL> INSERT INTO DEPENDENT VALUES(66,'MOHANLAL','SIR','FATHER',2);
+
+1 row created.
+
+SQL> INSERT INTO DEPENDENT VALUES(88,'LIDIYA','TOVINO','SPOUSE',3);
+
+1 row created.
+
+SQL> INSERT INTO DEPENDENT VALUES(99,'SUGUMARAN','KUMAR','FATHER',4);
+
+1 row created.
+
+SQL> INSERT INTO DEPENDENT VALUES(55,'BOBAN','KUNCHAKO','FATHER',5);
+
+1 row created.
+
+SQL> SELECT * FROM EMPLOYETAB;
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+         1 DULQUER                        SALMAN
+dq123@gmail.com           8486235875 20-APR-12        101      10000      66666
+        20
+
+         2 PRANAV                         MOHANLAL
+pm@gmail.com              8486235870 20-APR-13        102      20000      66660
+        21
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+
+         3 TOVINO                         THOMAS
+tt@gmail.com              8486230870 25-MAY-13        103      30000      66600
+        22
+
+         4 PRITHVI                        RAJ
+pr@gmail.com              8086230870 26-MAY-15        104      30000      60600
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+        23
+
+         5 KUNJACO                        BOBAN
+kb@gmail.com              8086230070 30-JAN-15        105      50000      60660
+        24
+
+
+SQL> SELECT * FROM JOBT;
+
+       JID JOB_TITLE               MIN_SAL    MAX_SAL
+---------- -------------------- ---------- ----------
+       101 SALESPERSON                5000      15000
+       102 ANALYST                    3000      25000
+       103 DATA ANALYST              13000      35000
+       104 BUSINESS ANALYST           6000      38000
+       105 DEVELOPER                  7000      48000
+
+SQL> SELECT * FROM DEPART;
+
+    DEPTID DEPTNAME                         LID
+---------- ------------------------- ----------
+        20 SALES                          22222
+        21 SALES                          22200
+        22 HR                             20000
+        23 TESTING                            0
+        24 MARKETING                      22220
+
+SQL> SELECT * FROM REGION;
+
+       RID RNAME
+---------- -------------------------
+         9 ASIA
+        99 AFRICA
+       999 EUROPE
+      9999 AMERICA
+     99999 ANTARTICA
+
+SQL> SELECT * FROM COUNTRIES;
+
+       CID CNAME                            RID
+---------- ------------------------- ----------
+     10101 INDIA                              9
+       101 NIGERIA                           99
+       111 SPAIN                            999
+        11 US                              9999
+     11111 ANTARTICA                      99999
+
+SQL> SELECT * FROM LOCATION;
+
+       LID STREET_ADDRESS                 POSTAL_CODE
+---------- ------------------------------ -------------------------
+CITY                      STATE                                 CID
+------------------------- ------------------------------ ----------
+     22222 GANDHI_NAGAR                   98760
+AHMEDABAD                 GUJARAT                             10101
+
+     22220 24th STREET                    98700
+NIKO                      NIGEI                                 101
+
+     22200 SAINT LOUIS STREET             98000
+LOUIS                     SPAIN                                 111
+
+
+       LID STREET_ADDRESS                 POSTAL_CODE
+---------- ------------------------------ -------------------------
+CITY                      STATE                                 CID
+------------------------- ------------------------------ ----------
+     20000 SILICON VALLEY                 90000
+JOHANSBERG                US                                     11
+
+         0 ATLANTIC VAIL                  80000
+BERG                      ANTARTICA                           11111
+
+
+SQL> SELECT * FROM DEPENDENT;
+
+       DID FIR_NAME             LAST_NAME
+---------- -------------------- ------------------------------
+RELATIONSHIP                EID
+-------------------- ----------
+        77 MUHD                 MAMOOTTY
+FATHER                        1
+
+        66 MOHANLAL             SIR
+FATHER                        2
+
+        88 LIDIYA               TOVINO
+SPOUSE                        3
+
+
+       DID FIR_NAME             LAST_NAME
+---------- -------------------- ------------------------------
+RELATIONSHIP                EID
+-------------------- ----------
+        99 SUGUMARAN            KUMAR
+FATHER                        4
+
+        55 BOBAN                KUNCHAKO
+FATHER                        5
+
+
+SQL> SELECT * FROM EMPLOYETAB WHERE LOCATION=22222;
+SELECT * FROM EMPLOYETAB WHERE LOCATION=22222
+                               *
+ERROR at line 1:
+ORA-00904: "LOCATION": invalid identifier
+
+
+SQL> SELECT * FROM EMPLOYETAB WHERE DEPTID IN (SELECT DEPTID FROM DEPART WHERE LOCATION=22222);
+SELECT * FROM EMPLOYETAB WHERE DEPTID IN (SELECT DEPTID FROM DEPART WHERE LOCATION=22222)
+                                                                          *
+ERROR at line 1:
+ORA-00904: "LOCATION": invalid identifier
+
+
+SQL> SELECT * FROM EMPLOYETAB WHERE DEPTID IN (SELECT DEPTID FROM DEPART WHERE LID=22222);
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+         1 DULQUER                        SALMAN
+dq123@gmail.com           8486235875 20-APR-12        101      10000      66666
+        20
+
+
+SQL> SELECT * FROM EMPLOYEE WHERE SALARY=(SELECT MAX(SALARY) FROM EMPLOYEE;
+SELECT * FROM EMPLOYEE WHERE SALARY=(SELECT MAX(SALARY) FROM EMPLOYEE
+                                     *
+ERROR at line 1:
+ORA-00921: unexpected end of SQL command
+
+
+SQL> SELECT * FROM EMPLOYEE WHERE SALARY=(SELECT MAX(SALARY) FROM EMPLOYEE;
+SELECT * FROM EMPLOYEE WHERE SALARY=(SELECT MAX(SALARY) FROM EMPLOYEE
+                                     *
+ERROR at line 1:
+ORA-00921: unexpected end of SQL command
+
+
+SQL> SELECT * FROM EMPLOYEE WHERE SALARY=(SELECT MAX(SALARY) FROM EMPLOYEE);
+
+EMPNO                EMPNAME                   ADDRESS
+-------------------- ------------------------- -------------------------
+      PHNO     SALARY DOB       DESIGNATION
+---------- ---------- --------- --------------------
+103                  Ammy                      Ammyvilla
+  89906050      49000 05-FEB-03
+
+
+SQL> SELECT * FROM EMPLOYETAB WHERE SALARY=(SELECT MAX(SALARY) FROM EMPLOYEE);
+
+no rows selected
+
+SQL> SELECT * FROM EMPLOYETAB WHERE SALARY=(SELECT MAX(SALARY) FROM EMPLOYETAB);
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+         5 KUNJACO                        BOBAN
+kb@gmail.com              8086230070 30-JAN-15        105      50000      60660
+        24
+
+
+SQL> SELECT * FROM EMPLOYETAB WHERE SALARY>(SELECT AVG(SALARY) FROM EMPLOYETAB);
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+         3 TOVINO                         THOMAS
+tt@gmail.com              8486230870 25-MAY-13        103      30000      66600
+        22
+
+         4 PRITHVI                        RAJ
+pr@gmail.com              8086230870 26-MAY-15        104      30000      60600
+        23
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+
+         5 KUNJACO                        BOBAN
+kb@gmail.com              8086230070 30-JAN-15        105      50000      60660
+        24
+
+
+SQL> SELECT DISTICT d.DEPTID,d.DEPTNAME FROM DEPART d JOIN EMPLOYETAB e ON d.DEPTID=e.DEPTID WHERE e.SALARY>10000;
+SELECT DISTICT d.DEPTID,d.DEPTNAME FROM DEPART d JOIN EMPLOYETAB e ON d.DEPTID=e.DEPTID WHERE e.SALARY>10000
+                *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT DISTINCT d.DEPTID,d.DEPTNAME FROM DEPART d JOIN EMPLOYETAB e ON d.DEPTID=e.DEPTID WHERE e.SALARY>10000;
+
+    DEPTID DEPTNAME
+---------- -------------------------
+        21 SALES
+        22 HR
+        23 TESTING
+        24 MARKETING
+
+SQL> SELECT  d.DEPTID,d.DEPTNAME FROM DEPART d WHERE d.DEPTID NOT IN(SELECT DEPTID FROM EMPLOYETAB WHERE SALARY>10000);
+
+    DEPTID DEPTNAME
+---------- -------------------------
+        20 SALES
+
+SQL> SELECT  d.DEPTID,d.DEPTNAME FROM DEPART d WHERE d.DEPTID  IN(SELECT DEPTID FROM EMPLOYETAB WHERE SALARY>10000);
+
+    DEPTID DEPTNAME
+---------- -------------------------
+        21 SALES
+        22 HR
+        23 TESTING
+        24 MARKETING
+
+SQL> SELECT * FROM EMPLOYETAB WHERE SALARY>(SELECT MIN(SALARY) FROM EMPLOYETAB);
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+         2 PRANAV                         MOHANLAL
+pm@gmail.com              8486235870 20-APR-13        102      20000      66660
+        21
+
+         3 TOVINO                         THOMAS
+tt@gmail.com              8486230870 25-MAY-13        103      30000      66600
+        22
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+
+         4 PRITHVI                        RAJ
+pr@gmail.com              8086230870 26-MAY-15        104      30000      60600
+        23
+
+         5 KUNJACO                        BOBAN
+kb@gmail.com              8086230070 30-JAN-15        105      50000      60660
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+        24
+
+
+SQL> SELECT * FROM EMPLOYETAB  e1 WHERE SALARY>=all(SELECT MAX(SALARY) FROM EMPLOYETAB e2 where e1.DEPTID=e2.DEPTID);
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+         1 DULQUER                        SALMAN
+dq123@gmail.com           8486235875 20-APR-12        101      10000      66666
+        20
+
+         2 PRANAV                         MOHANLAL
+pm@gmail.com              8486235870 20-APR-13        102      20000      66660
+        21
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+
+         3 TOVINO                         THOMAS
+tt@gmail.com              8486230870 25-MAY-13        103      30000      66600
+        22
+
+         4 PRITHVI                        RAJ
+pr@gmail.com              8086230870 26-MAY-15        104      30000      60600
+
+       EID FNAME                          LNAME
+---------- ------------------------------ -------------------------
+EMAIL                           PHNO HIRE_DATE        JID     SALARY MANAGER_ID
+------------------------- ---------- --------- ---------- ---------- ----------
+    DEPTID
+----------
+        23
+
+         5 KUNJACO                        BOBAN
+kb@gmail.com              8086230070 30-JAN-15        105      50000      60660
+        24
+
+
+SQL> SELECT DEPTID,AVG(SALARY) AS AVG_SALARY FROMEMPLOYETAB GROUB BY DEPATID;
+SELECT DEPTID,AVG(SALARY) AS AVG_SALARY FROMEMPLOYETAB GROUB BY DEPATID
+                                        *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT DEPTID,AVG(SALARY) AS AVG_SALARY FROM EMPLOYETAB GROUB BY DEPTID;
+SELECT DEPTID,AVG(SALARY) AS AVG_SALARY FROM EMPLOYETAB GROUB BY DEPTID
+                                                              *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> SELECT DEPTID,AVG(SALARY) AS AVG_SALARY FROM EMPLOYETAB GROUP BY DEPTID;
+
+    DEPTID AVG_SALARY
+---------- ----------
+        22      30000
+        20      10000
+        21      20000
+        24      50000
+        23      30000
+
+SQL> SELECT * FROM EMPLOYETAB  WHERE SALARY=(SELECT AVG(SALARY)FROM EMPLOYETAB;
+SELECT * FROM EMPLOYETAB  WHERE SALARY=(SELECT AVG(SALARY)FROM EMPLOYETAB
+                                        *
+ERROR at line 1:
+ORA-00921: unexpected end of SQL command
+
+
+SQL> SELECT * FROM EMPLOYETAB  WHERE SALARY=(SELECT AVG(SALARY)FROM EMPLOYETAB);
+
+no rows selected
+
+SQL> SELECT * FROM EMPLOYETAB e1  WHERE SALARY>(SELECT AVG(e2.SALARY)FROM EMPLOYETAB e2 where e1.DEPTID=E2.DEPTID);
+
+no rows selected
+
+SQL> SELECT * FROM EMPLOYETAB e1  WHERE SALARY>(SELECT AVG(e2.SALARY)FROM EMPLOYETAB e2 where e1.DEPTID=e2.DEPTID);
+
+no rows selected
+
+SQL> SELECT * FROM EMPLOYETAB e1  WHERE SALARY>(SELECT AVG(e2.SALARY)FROM EMPLOYETAB e2 where e1.DEPTID=e2.DEPTID);
+
