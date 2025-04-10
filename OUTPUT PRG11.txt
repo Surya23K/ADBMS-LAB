@@ -1,0 +1,90 @@
+Microsoft Windows [Version 10.0.19045.5608]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\CSELAB>SQLPLUS
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Thu Apr 10 09:42:38 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+Enter user-name: SYSTEM'
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: SYSTEM
+Enter password:
+
+Connected to:
+Oracle Database 10g Express Edition Release 10.2.0.1.0 - Production
+
+SQL> SET SERVEROUTPUT ON
+SQL> Ed prg11.sql
+
+SQL> CREATE TABLE EMPLOYEE(ENO NUMBER(4),ENAME VARCHAR(20),DGN CHAR(18),SAL NUMBER(6),DEPTNO NUMBER(2));
+CREATE TABLE EMPLOYEE(ENO NUMBER(4),ENAME VARCHAR(20),DGN CHAR(18),SAL NUMBER(6),DEPTNO NUMBER(2))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> CREATE TABLE EMPLOYEE1(ENO NUMBER(4),ENAME VARCHAR(20),DGN CHAR(18),SAL NUMBER(6),DEPTNO NUMBER(2));
+
+Table created.
+
+SQL> insert into employee1 values(1,'suryan','sweeper',10000,10);
+
+1 row created.
+
+SQL> insert into employee1 values(2,'chandran','manager',15700,20);
+
+1 row created.
+
+SQL> insert into employee1 values(3,'rama chandran','clerk',16000,50);
+
+1 row created.
+
+SQL> select * from employee1;
+
+       ENO ENAME                DGN                       SAL     DEPTNO
+---------- -------------------- ------------------ ---------- ----------
+         1 suryan               sweeper                 10000         10
+         2 chandran             manager                 15700         20
+         3 rama chandran        clerk                   16000         50
+
+SQL> ed employee1.sql
+
+SQL> @employee1
+  9  /
+Enter value for n: 1
+old   2: n number(4):=&n;
+new   2: n number(4):=1;
+1 suryan 10000
+
+PL/SQL procedure successfully completed.
+
+SQL> @prg11.sql
+SQL> Ed prg11.sql
+
+SQL> @PRG11.SQL
+SQL> /
+Enter value for n: 2
+old   2: n number(4):=&n;
+new   2: n number(4):=2;
+2 chandran 15700
+
+PL/SQL procedure successfully completed.
+
+SQL> @PRG12.SQL
+SP2-0310: unable to open file "PRG12.SQL"
+SQL> Ed prg12.sql
+
+
+
+
+
+
+
+
+
