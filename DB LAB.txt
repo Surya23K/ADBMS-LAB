@@ -1,0 +1,561 @@
+Microsoft Windows [Version 10.0.19045.5737]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\WINDOWS\system32>sqlplus
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Mon Apr 28 07:45:19 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+
+Connected to:
+Oracle Database 10g Express Edition Release 10.2.0.1.0 - Production
+
+SQL> set serveroutput on
+SQL> ed pr12.sql;
+
+SQL> exec pr12(12,34);
+BEGIN pr12(12,34); END;
+
+      *
+ERROR at line 1:
+ORA-06550: line 1, column 7:
+PLS-00201: identifier 'PR12' must be declared
+ORA-06550: line 1, column 7:
+PL/SQL: Statement ignored
+
+
+SQL> exec pr1(12,34);
+BEGIN pr1(12,34); END;
+
+      *
+ERROR at line 1:
+ORA-06550: line 1, column 7:
+PLS-00201: identifier 'PR1' must be declared
+ORA-06550: line 1, column 7:
+PL/SQL: Statement ignored
+
+
+SQL> exec pr1(12,34);
+BEGIN pr1(12,34); END;
+
+      *
+ERROR at line 1:
+ORA-06550: line 1, column 7:
+PLS-00201: identifier 'PR1' must be declared
+ORA-06550: line 1, column 7:
+PL/SQL: Statement ignored
+
+
+SQL> ed pr12.sql;
+
+SQL> exec pr1(12,34);
+BEGIN pr1(12,34); END;
+
+      *
+ERROR at line 1:
+ORA-06550: line 1, column 7:
+PLS-00201: identifier 'PR1' must be declared
+ORA-06550: line 1, column 7:
+PL/SQL: Statement ignored
+
+
+SQL> ed pr12.sql;
+
+SQL> exec pr1(12,34);
+BEGIN pr1(12,34); END;
+
+      *
+ERROR at line 1:
+ORA-06550: line 1, column 7:
+PLS-00201: identifier 'PR1' must be declared
+ORA-06550: line 1, column 7:
+PL/SQL: Statement ignored
+
+
+SQL> ed pr12.sql;
+
+SQL> exec pr1(12,34);
+BEGIN pr1(12,34); END;
+
+      *
+ERROR at line 1:
+ORA-06550: line 1, column 7:
+PLS-00201: identifier 'PR1' must be declared
+ORA-06550: line 1, column 7:
+PL/SQL: Statement ignored
+
+
+SQL> ed pr12.sql;
+
+SQL> @pr12.sql;
+  7  /
+
+Procedure created.
+
+SQL> exec pr1(12,34);
+Sum is46
+
+PL/SQL procedure successfully completed.
+
+SQL> exec pr1(12,34);
+Sum is46
+
+PL/SQL procedure successfully completed.
+
+SQL> ed pro13.sql
+
+SQL> @pr13.sql
+SP2-0310: unable to open file "pr13.sql"
+SQL> @pro13.sql
+  7  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> show errors;
+Errors for PROCEDURE PR2:
+
+LINE/COL ERROR
+-------- -----------------------------------------------------------------
+5/5      PLS-00103: Encountered the symbol ":" when expecting one of the
+         following:
+         := . ( @ % ;
+         The symbol ":= was inserted before ":" to continue.
+
+SQL> ed pro13.sql
+
+SQL> @pr13.sql
+SP2-0310: unable to open file "pr13.sql"
+SQL> @pro13.sql
+  7  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> ed pro13.sql
+
+SQL> @pro13.sql
+  7  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> show errors;
+Errors for PROCEDURE PR2:
+
+LINE/COL ERROR
+-------- -----------------------------------------------------------------
+2/3      PL/SQL: Item ignored
+2/12     PLS-00302: component 'SAL' must be declared
+4/1      PL/SQL: SQL Statement ignored
+4/39     PL/SQL: ORA-00904: "ENO": invalid identifier
+5/1      PL/SQL: Statement ignored
+5/1      PLS-00201: identifier 'COMM' must be declared
+SQL> ed pro13.sql
+
+SQL> @pr12.sql;
+  7  @pro13.sql;
+ 14  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> @pro13.sql;
+  8  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> exec pr2;
+BEGIN pr2; END;
+
+      *
+ERROR at line 1:
+ORA-06550: line 1, column 7:
+PLS-00905: object SYSTEM.PR2 is invalid
+ORA-06550: line 1, column 7:
+PL/SQL: Statement ignored
+
+
+SQL> ed pro14.sql
+
+SQL> @ pro14.sql
+create or replace procedurepr3(currency in out number)is
+                  *
+ERROR at line 1:
+ORA-00922: missing or invalid option
+
+
+SP2-0042: unknown command "end" - rest of line ignored.
+SQL> ed pro14.sql
+
+SQL> @ pro14.sql
+  5  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> show errors procedure pr2;
+Errors for PROCEDURE PR2:
+
+LINE/COL ERROR
+-------- -----------------------------------------------------------------
+3/3      PL/SQL: Item ignored
+3/12     PLS-00302: component 'SAL' must be declared
+5/1      PL/SQL: SQL Statement ignored
+5/39     PL/SQL: ORA-00904: "ENO": invalid identifier
+6/1      PL/SQL: Statement ignored
+6/7      PLS-00320: the declaration of the type of this expression is
+         incomplete or malformed
+
+SQL> show errors procedure pr3;
+Errors for PROCEDURE PR3:
+
+LINE/COL ERROR
+-------- -----------------------------------------------------------------
+3/1      PL/SQL: Statement ignored
+3/11     PLS-00201: identifier 'CURRRENCY' must be declared
+SQL> ed prg18.sql
+
+SQL> @ pro18.sql
+SP2-0310: unable to open file "pro18.sql"
+SQL> @ prg18.sql
+  8  /
+
+Function created.
+
+SQL> ed prg18call.sql;
+
+SQL> @ prg18call.sql
+  9  /
+Enter value for x: 10
+old   2: x number:=&x;
+new   2: x number:=10;
+Enter value for y: 20
+old   3: y number:=&y;
+new   3: y number:=20;
+sum is 30
+
+PL/SQL procedure successfully completed.
+
+SQL> create table employee values(eno number(4),ename varchar(20),job varchar(20),sal number(6));
+create table employee values(eno number(4),ename varchar(20),job varchar(20),sal number(6))
+                      *
+ERROR at line 1:
+ORA-00922: missing or invalid option
+
+
+SQL> create table employee (eno number(4),ename varchar(20),job varchar(20),sal number(6));
+create table employee (eno number(4),ename varchar(20),job varchar(20),sal number(6))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create table employe (eno number(4),ename varchar(20),job varchar(20),sal number(6));
+create table employe (eno number(4),ename varchar(20),job varchar(20),sal number(6))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create table employ (eno number(4),ename varchar(20),job varchar(20),sal number(6));
+create table employ (eno number(4),ename varchar(20),job varchar(20),sal number(6))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create table employees (eno number(4),ename varchar(20),job varchar(20),sal number(6));
+
+Table created.
+
+SQL> insert into employees values(1,'sini','sales',15000);
+
+1 row created.
+
+SQL> insert into employees values(2,'suni','hr',25000);
+
+1 row created.
+
+SQL> ed prg20.sql
+
+SQL> ed prg12call.sql
+
+SQL> ed prg20call.sql
+
+SQL> exec fun2.sql
+BEGIN fun2.sql; END;
+
+           *
+ERROR at line 1:
+ORA-06550: line 1, column 12:
+PLS-00103: Encountered the symbol "SQL" when expecting one of the following:
+<an identifier> <a double-quoted delimited-identifier> delete
+exists prior
+The symbol "<an identifier> was inserted before "SQL" to continue.
+
+
+SQL> @prg20.sql
+ 10  /
+
+Warning: Function created with compilation errors.
+
+SQL> ed prg12call.sql
+
+SQL> ed prg20.sql
+
+SQL> ed prg20call.sql
+
+SQL> exec prg20.sql
+BEGIN prg20.sql; END;
+
+            *
+ERROR at line 1:
+ORA-06550: line 1, column 13:
+PLS-00103: Encountered the symbol "SQL" when expecting one of the following:
+<an identifier> <a double-quoted delimited-identifier> delete
+exists prior
+The symbol "<an identifier> was inserted before "SQL" to continue.
+
+
+SQL> ed prg20.sql
+
+SQL> exec prg20.sql
+BEGIN prg20.sql; END;
+
+            *
+ERROR at line 1:
+ORA-06550: line 1, column 13:
+PLS-00103: Encountered the symbol "SQL" when expecting one of the following:
+<an identifier> <a double-quoted delimited-identifier> delete
+exists prior
+The symbol "<an identifier> was inserted before "SQL" to continue.
+
+
+SQL> @prg20.sql
+ 10  /
+
+Function created.
+
+SQL> exec prg20.sql
+BEGIN prg20.sql; END;
+
+            *
+ERROR at line 1:
+ORA-06550: line 1, column 13:
+PLS-00103: Encountered the symbol "SQL" when expecting one of the following:
+<an identifier> <a double-quoted delimited-identifier> delete
+exists prior
+The symbol "<an identifier> was inserted before "SQL" to continue.
+
+
+SQL> @ prg20call.sql
+SQL> /
+
+Function created.
+
+SQL> ed prg20call.sql
+
+SQL> @prg20call.sql
+SQL> /
+
+Function created.
+
+SQL> @prg20.sql
+ 10  /
+
+Function created.
+
+SQL> ed prg20.sql
+
+SQL> @prg20call.sql
+SQL> ed prg20call.sql
+
+SQL> ed prg20call.sql
+
+SQL> @ prg20call.sql
+  8  /
+Enter value for n: 20
+old   2: n employees.eno%type:=&n;
+new   2: n employees.eno%type:=20;
+declare
+*
+ERROR at line 1:
+ORA-01403: no data found
+ORA-06512: at "SYSTEM.FUN2", line 6
+ORA-06512: at line 5
+
+
+SQL> @ prg20call.sql
+  8  /
+Enter value for n: 1
+old   2: n employees.eno%type:=&n;
+new   2: n employees.eno%type:=1;
+commission is1500
+
+PL/SQL procedure successfully completed.
+
+SQL> ed prg21.sql
+
+SQL> ed prg13.sql
+
+SQL> @ prg13call.sql
+SP2-0310: unable to open file "prg13call.sql"
+SQL> ed prg13.sql
+
+SQL> ed prg13.sql
+
+SQL> @prg13.sql
+  7  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> ed prg13.sql
+
+SQL> @ prg13.sql
+  7  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> ed prg13.sql
+
+SQL> @prg13.sql
+  8  /
+
+Procedure created.
+
+SQL> @prg13call.sql
+SP2-0310: unable to open file "prg13call.sql"
+SQL> ed prg13call.sql
+
+SQL> @ prg13call.sql
+SP2-0310: unable to open file "prg13call.sql"
+SQL>
+SQL>
+SQL> ed prg13.sql
+
+SQL> ed prg13call.sql
+
+SQL> ed prg13call.sql
+
+SQL> ed prg13call.sql
+
+SQL> ed prg13call.sql
+
+SQL> ed prg13call.sql
+
+SQL> ed prg13call.sql
+
+SQL> @prg13call.sql
+  8  /
+Enter value for n: 1
+old   2: n employees.eno%type:=&n;
+new   2: n employees.eno%type:=1;
+commission is1500
+
+PL/SQL procedure successfully completed.
+
+SQL> @prg13call.sql
+  8  /
+Enter value for n: 2
+old   2: n employees.eno%type:=&n;
+new   2: n employees.eno%type:=2;
+commission is2500
+
+PL/SQL procedure successfully completed.
+
+SQL> ed prg14.sql
+
+SQL> ed prg14.sql
+
+SQL> prg14call.sql
+SP2-0734: unknown command beginning "prg14call...." - rest of line ignored.
+SQL> ed prg14call.sql
+
+SQL> @prg14.sql
+SQL> /
+Enter value for n: 2
+old   2: n employees.eno%type:=&n;
+new   2: n employees.eno%type:=2;
+commission is2500
+
+PL/SQL procedure successfully completed.
+
+SQL> @prg14call.sql
+  7  /
+Enter value for currency: 2
+old   2: currency number:=&currency;
+new   2: currency number:=2;
+pr3(currency);
+*
+ERROR at line 4:
+ORA-06550: line 4, column 1:
+PLS-00905: object SYSTEM.PR3 is invalid
+ORA-06550: line 4, column 1:
+PL/SQL: Statement ignored
+
+
+SQL> ed prg14call.sql
+
+SQL> ed prg14call.sql
+
+SQL> ed prg14call.sql
+
+SQL> @prg14call.sql
+  7  /
+Enter value for currency: 2
+old   2: currency number:=&currency;
+new   2: currency number:=2;
+pr3 (currency);
+*
+ERROR at line 4:
+ORA-06550: line 4, column 1:
+PLS-00905: object SYSTEM.PR3 is invalid
+ORA-06550: line 4, column 1:
+PL/SQL: Statement ignored
+
+
+SQL> ed prg14call.sql
+
+SQL> @prg14call.sql
+  7  /
+Enter value for currency: 1
+old   2: currency number:=&currency;
+new   2: currency number:=1;
+pr3(currency);
+*
+ERROR at line 4:
+ORA-06550: line 4, column 1:
+PLS-00905: object SYSTEM.PR3 is invalid
+ORA-06550: line 4, column 1:
+PL/SQL: Statement ignored
+
+
+SQL> ed prg14.sql
+
+SQL> ed prg14.sql
+
+SQL> ed prg14.sql
+
+SQL> ed prg14.sql
+
+SQL> @prg14.sql
+  6  /
+
+Procedure created.
+
+SQL> @prg14call.sql
+  7  /
+Enter value for currency: 2
+old   2: currency number:=&currency;
+new   2: currency number:=2;
+164
+
+PL/SQL procedure successfully completed.
+
+SQL> @prg14call.sql
+  7  /
+Enter value for currency: 1
+old   2: currency number:=&currency;
+new   2: currency number:=1;
+82
+
+PL/SQL procedure successfully completed.
