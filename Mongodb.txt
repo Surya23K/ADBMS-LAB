@@ -1,0 +1,237 @@
+Microsoft Windows [Version 10.0.19045.5737]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\CSELAB>mongo
+MongoDB shell version v5.0.3
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("1ee7cbc5-7685-47e2-b159-5f07b256e3c6") }
+MongoDB server version: 5.0.3
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+We recommend you begin using "mongosh".
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+        https://docs.mongodb.com/
+Questions? Try the MongoDB Developer Community Forums
+        https://community.mongodb.com
+---
+The server generated these startup warnings when booting:
+        2025-05-08T09:28:15.641-07:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> use INVOICE
+switched to db INVOICE
+> db.createCollection("CUSTOMER")
+{ "ok" : 1 }
+> ad.createCollection("PRODUCT")
+uncaught exception: ReferenceError: ad is not defined :
+@(shell):1:1
+> db.createCollection("PRODUCT")
+{ "ok" : 1 }
+> show collection
+uncaught exception: Error: don't know how to show [collection] :
+shellHelper.show@src/mongo/shell/utils.js:1211:11
+shellHelper@src/mongo/shell/utils.js:838:15
+@(shellhelp2):1:1
+> show collections
+CUSTOMER
+PRODUCT
+> db CUSTOMER.insertOne({name:"Anju",address:Anju Bhavan",city:"Malappuram",age:"40",phno:"1234567890"})
+uncaught exception: SyntaxError: unexpected token: identifier :
+@(shell):1:3
+> db CUSTOMER.insertOne({name:"Anju",address:"Anju Bhavan",city:"Malappuram",age:"40",phno:"1234567890"})
+uncaught exception: SyntaxError: unexpected token: identifier :
+@(shell):1:3
+> db.CUSTOMER.insertOne({name:"Anju",address:"Anju Bhavan",city:"Malappuram",age:"40",phno:"1234567890"})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("681ce035291593e2f0bfb01a")
+}
+> db.CUSTOMER.insertMany({name:"Anju",address:"Anju Bhavan",city:"Malappuram",age:"40",phno:"1234567890"},{name:"Surya",address:"Surya villa",city:"Pathanapuram",age:"20",phno:78996543435})
+uncaught exception: TypeError: documents.map is not a function :
+DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:307:17
+@(shell):1:1
+> db.CUSTOMER.insertMany({name:"Anju",address:"Anju Bhavan",city:"Malappuram",age:"40",phno:"1234567890"},{name:"Surya",address:"Surya villa",city:"Pathanapuram",age:"20",phno:"78996543435"})
+uncaught exception: TypeError: documents.map is not a function :
+DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:307:17
+@(shell):1:1
+> db.CUSTOMER.insertMany({name:"Anju",address:"Anju Bhavan",city:"Malappuram",age:"40",phno:"1234567890"},{name:"Surya",address:"Surya villa",city:"Pathanapuram",age:"20",phno:"7899654335"})
+uncaught exception: TypeError: documents.map is not a function :
+DBCollection.prototype.insertMany@src/mongo/shell/crud_api.js:307:17
+@(shell):1:1
+> db.CUSTOMER.insertMany([{name:"Anju",address:"Anju Bhavan",city:"Malappuram",age:"40",phno:"1234567890"},{name:"Surya",address:"Surya villa",city:"Pathanapuram",age:"20",phno:"7899654335"}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("681ce0df291593e2f0bfb01b"),
+                ObjectId("681ce0df291593e2f0bfb01c")
+        ]
+}
+> db.PRODUCT.insertMany({pname:"pen",quantity:"2",price:"5"},{pname:"pencil",quantity:"2",price:"10"}])
+uncaught exception: SyntaxError: missing ) after argument list :
+@(shell):1:99
+> db.PRODUCT.insertMany([{pname:"pen",quantity:"2",price:"5"},{pname:"pencil",quantity:"2",price:"10"}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("681ce1a3291593e2f0bfb01d"),
+                ObjectId("681ce1a3291593e2f0bfb01e")
+        ]
+}
+> db.CUSTOMER.find()
+{ "_id" : ObjectId("681ce035291593e2f0bfb01a"), "name" : "Anju", "address" : "Anju Bhavan", "city" : "Malappuram", "age" : "40", "phno" : "1234567890" }
+{ "_id" : ObjectId("681ce0df291593e2f0bfb01b"), "name" : "Anju", "address" : "Anju Bhavan", "city" : "Malappuram", "age" : "40", "phno" : "1234567890" }
+{ "_id" : ObjectId("681ce0df291593e2f0bfb01c"), "name" : "Surya", "address" : "Surya villa", "city" : "Pathanapuram", "age" : "20", "phno" : "7899654335" }
+> db.CUSTOMER.find().pretty()
+{
+        "_id" : ObjectId("681ce035291593e2f0bfb01a"),
+        "name" : "Anju",
+        "address" : "Anju Bhavan",
+        "city" : "Malappuram",
+        "age" : "40",
+        "phno" : "1234567890"
+}
+{
+        "_id" : ObjectId("681ce0df291593e2f0bfb01b"),
+        "name" : "Anju",
+        "address" : "Anju Bhavan",
+        "city" : "Malappuram",
+        "age" : "40",
+        "phno" : "1234567890"
+}
+{
+        "_id" : ObjectId("681ce0df291593e2f0bfb01c"),
+        "name" : "Surya",
+        "address" : "Surya villa",
+        "city" : "Pathanapuram",
+        "age" : "20",
+        "phno" : "7899654335"
+}
+> db.CUSTOMER.updateOne({city:"wandoor"}{$set:{city:"kochi"})
+... ^C
+
+> db.CUSTOMER.updateOne({city:"Malappuram"}{$set:{city:"kochi"})
+... ^C
+
+> dbdb.CUSTOMER.updateOne({city:"Malappuram"},{$set:{city:"kochi"}})
+uncaught exception: ReferenceError: dbdb is not defined :
+@(shell):1:1
+> db.CUSTOMER.updateOne({city:"Malappuram"},{$set:{city:"kochi"}})
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.CUSTOMER.deleteOne({city:"Calicut"})
+{ "acknowledged" : true, "deletedCount" : 0 }
+> db.CUSTOMER.find({$or:[{city:"Kozhikode"}[{city:"Malappuram"}]}).pretty()
+... ^C
+
+> db.CUSTOMER.find($or;[{city:"Kozhikode"},{city:"Malappuram"}]}).pretty()
+uncaught exception: SyntaxError: missing ) after argument list :
+@(shell):1:20
+> db.CUSTOMER.find($or:[{"city":"Kozhikode"},{"city":"Malappuram"}]}).pretty()
+uncaught exception: SyntaxError: missing ) after argument list :
+@(shell):1:20
+> db.CUSTOMER.find($or:[{"city":"Pathanapuram"},{"city":"Malappuram"}]}).pretty()
+uncaught exception: SyntaxError: missing ) after argument list :
+@(shell):1:20
+> db.CUSTOMER.find({$or:[{"city":"Pathanapuram"},{"city":"Malappuram"}]}).pretty()
+{
+        "_id" : ObjectId("681ce0df291593e2f0bfb01b"),
+        "name" : "Anju",
+        "address" : "Anju Bhavan",
+        "city" : "Malappuram",
+        "age" : "40",
+        "phno" : "1234567890"
+}
+{
+        "_id" : ObjectId("681ce0df291593e2f0bfb01c"),
+        "name" : "Surya",
+        "address" : "Surya villa",
+        "city" : "Pathanapuram",
+        "age" : "20",
+        "phno" : "7899654335"
+}
+> db.CUSTOMER.find({"age":{$it:"50"}}).pretty()
+Error: error: {
+        "ok" : 0,
+        "errmsg" : "unknown operator: $it",
+        "code" : 2,
+        "codeName" : "BadValue"
+}
+> db.CUSTOMER.find({"age":{$gt:"50"}}).pretty()
+> db.CUSTOMER.find({"age":{$gt:"5"}}).pretty()
+> db.CUSTOMER.find({"age":{$lt:"50"}}).pretty()
+{
+        "_id" : ObjectId("681ce035291593e2f0bfb01a"),
+        "name" : "Anju",
+        "address" : "Anju Bhavan",
+        "city" : "kochi",
+        "age" : "40",
+        "phno" : "1234567890"
+}
+{
+        "_id" : ObjectId("681ce0df291593e2f0bfb01b"),
+        "name" : "Anju",
+        "address" : "Anju Bhavan",
+        "city" : "Malappuram",
+        "age" : "40",
+        "phno" : "1234567890"
+}
+{
+        "_id" : ObjectId("681ce0df291593e2f0bfb01c"),
+        "name" : "Surya",
+        "address" : "Surya villa",
+        "city" : "Pathanapuram",
+        "age" : "20",
+        "phno" : "7899654335"
+}
+> db.CUSTOMER.find({"age":{$gt:"20"}}).pretty()
+{
+        "_id" : ObjectId("681ce035291593e2f0bfb01a"),
+        "name" : "Anju",
+        "address" : "Anju Bhavan",
+        "city" : "kochi",
+        "age" : "40",
+        "phno" : "1234567890"
+}
+{
+        "_id" : ObjectId("681ce0df291593e2f0bfb01b"),
+        "name" : "Anju",
+        "address" : "Anju Bhavan",
+        "city" : "Malappuram",
+        "age" : "40",
+        "phno" : "1234567890"
+}
+> db.CUSTOMER.find({"city":{$ne:"Pathanapuram"}}).pretty()
+{
+        "_id" : ObjectId("681ce035291593e2f0bfb01a"),
+        "name" : "Anju",
+        "address" : "Anju Bhavan",
+        "city" : "kochi",
+        "age" : "40",
+        "phno" : "1234567890"
+}
+{
+        "_id" : ObjectId("681ce0df291593e2f0bfb01b"),
+        "name" : "Anju",
+        "address" : "Anju Bhavan",
+        "city" : "Malappuram",
+        "age" : "40",
+        "phno" : "1234567890"
+}
+> db.CUSTOMER.find({$nor:[{"city":"kochi"},{"city":"Malappuram"}}).pretty()
+... db.CUSTOMER.find({"city":{$ne:"Pathanapuram"}}).pretty()
